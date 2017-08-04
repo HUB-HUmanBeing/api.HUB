@@ -1,0 +1,6 @@
+services:
+    project.ProjectAuth:
+        class: ProjectBundle\Services\ProjectAuth
+        arguments:
+            - "@security.token_storage"
+            - "@security.authorization_checker"

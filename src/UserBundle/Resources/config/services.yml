@@ -1,0 +1,6 @@
+services:
+    user.userSecurity:
+        class: UserBundle\Services\UserSecurity
+        arguments:
+            - "@security.token_storage"
+            - "@security.authorization_checker"
