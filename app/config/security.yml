@@ -1,29 +1,42 @@
 
 security:
     providers:
-          main:
-              entity:
-                  class:    UserBundle\Entity\User
-                  property: username
-
+        main:
+            entity:
+                class:    UserBundle\Entity\User
+                property: username
+        jwt: # optional
+            lexik_jwt: ~
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
         UserBundle\Entity\User: plaintext
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
-         dev:
-             pattern: ^/(_(profiler|wdt)|css|images|js)/
-             security: false
+        login:
+            pattern:  ^/login
+            stateless: true
+            anonymous: true
+            provider: main
+            form_login:
+                check_path: /login_check
+                username_parameter: _username
+                password_parameter: _password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+                require_previous_session: false
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
 
-         main:
-             pattern:   ^/
-             anonymous: true
-             provider:  main
-             form_login:
-                 login_path: login
-                 check_path: login_check
-             logout:
+        main:
+            pattern:   ^/
+            anonymous: true
+            provider:  main
+            form_login:
+                login_path: login
+                check_path: login_check
+            logout:
                  path:       logout
                  target:     login
 
