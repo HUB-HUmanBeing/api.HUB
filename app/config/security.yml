@@ -8,8 +8,10 @@ security:
         jwt: # optional
             lexik_jwt: ~
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
-        UserBundle\Entity\User: plaintext
+        Symfony\Component\Security\Core\User\User:
+            algorithm:            bcrypt
+        UserBundle\Entity\User:
+            algorithm:            bcrypt
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -34,10 +36,5 @@ security:
             anonymous: true
             provider:  main
             form_login:
-                login_path: login
                 check_path: login_check
-            logout:
-                 path:       logout
-                 target:     login
-
     role_hierarchy :

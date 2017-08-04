@@ -70,7 +70,7 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface
             $user->setDescription($this->description);
 
             $user->setSalt('');
-            $user->setPassword('0');
+            $user->setPassword(password_hash ( '0', PASSWORD_BCRYPT ));
             $user->setRoles(['ROLE_USER']);
             $user->setEncryptedPrivateAsymKey("");
             $user->setPublicAsymKey("");
